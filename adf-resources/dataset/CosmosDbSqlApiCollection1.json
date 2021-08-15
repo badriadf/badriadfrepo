@@ -1,0 +1,50 @@
+{
+	"name": "CosmosDbSqlApiCollection1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CosmosDb1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "CosmosDbSqlApiCollection",
+		"schema": {
+			"type": "object",
+			"properties": {
+				"vin": {
+					"type": "string"
+				},
+				"eventName": {
+					"type": "string"
+				},
+				"vehicleType": {
+					"type": "string"
+				},
+				"fuelType": {
+					"type": "string"
+				},
+				"s1": {
+					"type": "number"
+				},
+				"s2": {
+					"type": "number"
+				},
+				"s3": {
+					"type": "number"
+				},
+				"timestamp": {
+					"type": "string"
+				},
+				"date": {
+					"type": "string"
+				},
+				"region": {
+					"type": "string"
+				}
+			}
+		},
+		"typeProperties": {
+			"collectionName": "VehicleData"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

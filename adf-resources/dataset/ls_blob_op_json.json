@@ -1,0 +1,71 @@
+{
+	"name": "ls_blob_op_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "googlenews.json",
+				"folderPath": "googlenews",
+				"fileSystem": "raw"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"status": {
+					"type": "string"
+				},
+				"totalResults": {
+					"type": "integer"
+				},
+				"articles": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"source": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "null"
+									},
+									"name": {
+										"type": "string"
+									}
+								}
+							},
+							"author": {
+								"type": "string"
+							},
+							"title": {
+								"type": "string"
+							},
+							"description": {
+								"type": "string"
+							},
+							"url": {
+								"type": "string"
+							},
+							"urlToImage": {
+								"type": "string"
+							},
+							"publishedAt": {
+								"type": "string"
+							},
+							"content": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

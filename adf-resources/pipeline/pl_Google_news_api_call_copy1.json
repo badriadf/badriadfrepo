@@ -1,0 +1,113 @@
+{
+	"name": "pl_Google_news_api_call_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://kv-restapi.vault.azure.net/secrets/google-rest-api-key/f7bc7f91c098408fbe540cd30e8ddc85?api-version=7.0",
+					"method": "GET",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "Variable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Web1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "kv-apikey",
+					"value": {
+						"value": "@activity('Web1').output.value",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Variable",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "RestResource1",
+						"type": "DatasetReference",
+						"parameters": {
+							"URL": "everything?q=covid&from=2021-07-15&sortBy=publishedAt&apiKey=",
+							"ApiKey": {
+								"value": "@variables('kv-apikey')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ls_blob_op_json",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"variables": {
+			"kv-apikey": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-08-12T08:34:45Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

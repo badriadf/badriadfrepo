@@ -1,0 +1,19 @@
+{
+	"name": "Json2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_GoogleAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "query"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
